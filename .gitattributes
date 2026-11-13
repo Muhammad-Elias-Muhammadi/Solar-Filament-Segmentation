@@ -1,0 +1,5 @@
+submission/*.csv -text
+*.safetensors binary
+*.pkl binary
+*.pdf binary
+*.png binary

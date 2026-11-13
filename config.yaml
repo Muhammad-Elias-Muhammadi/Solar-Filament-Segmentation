@@ -1,0 +1,61 @@
+# All settings of the pipeline. Paths are relative to the root of the repository.
+
+seed: 2026
+data_dir: data/MAGFiLO_1.0_Kaggle_2026     # the Kaggle bundle, unzipped: train/ and test/ inside
+work_dir: work                              # cache, training runs and tuning tables (not in git)
+weights_dir: weights
+
+model:
+  encoder: tu-convnext_tiny.fb_in22k_ft_in1k
+
+train:
+  epochs: 150
+  steps_per_epoch: 80          # an epoch is a fixed number of random crops, not a pass over the frames
+  batch_size: 12
+  crop: 1024                   # native pixels, nothing is resized
+  lr: 3.0e-4
+  encoder_lr_mult: 0.5
+  weight_decay: 1.0e-2
+  warmup_frac: 0.05
+  bce_weight: 1.0
+  dice_weight: 0.5
+  skel_weight: 0.2
+  ema_decay: 0.999
+  val_every: 25
+
+augment:
+  scale: [0.85, 1.25]          # zoom, kept narrow so a 2 px filament survives
+  rotate: true                 # any angle: a full-disk frame has no preferred orientation
+  dihedral: true
+  gamma: [0.7, 1.5]
+  contrast: 0.25
+  brightness: 0.15
+  blur_p: 0.3                  # seeing: Gaussian blur, sigma in native pixels
+  blur_sigma: [0.5, 2.0]
+  lowres_p: 0.25               # down and up again: poor seeing or a coarser sensor
+  lowres_scale: [0.5, 1.0]
+  noise_p: 0.1                 # rare and weak
+  noise_std: 0.02
+  limb_p: 0.3                  # a different limb darkening
+  limb_strength: 0.25
+  haze_p: 0.2                  # thin cloud
+  haze_strength: 0.25
+
+copy_paste:
+  p: 0.5                       # share of crops that receive pasted filaments
+  n: [1, 4]
+  rotate: true
+
+predict:
+  tta: 4                       # flipped copies of each frame averaged at test time
+
+tune:
+  thresholds: [0.5, 0.6, 0.7, 0.8]
+
+patch_scorer:
+  arch: resnet18.a1_in1k       # larger backbones scored lower: there are only about 27,000 candidates
+  epochs: 20
+  batch: 128
+  lr: 1.0e-3
+  seeds: 3
+  blend: 0.5                   # weight of the feature scorer in the mean of the two scores

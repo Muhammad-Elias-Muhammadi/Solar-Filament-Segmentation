@@ -1,0 +1,17 @@
+{
+ "network": "unet_full.safetensors",
+ "threshold": 0.8,
+ "min_area": 30,
+ "keep_tau": 0.25,
+ "blend": 0.5,
+ "feature_scorer": "feature_scorer.pkl",
+ "patch_scorer": {
+  "arch": "resnet18.a1_in1k",
+  "files": [
+   "patch_scorer_seed0.safetensors",
+   "patch_scorer_seed1.safetensors",
+   "patch_scorer_seed2.safetensors"
+  ]
+ },
+ "out_of_fold_pq": 0.4586
+}
