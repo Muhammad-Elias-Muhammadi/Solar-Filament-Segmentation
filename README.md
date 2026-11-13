@@ -4,6 +4,9 @@ My solution to the [Solar Filament Segmentation Challenge 2026](https://www.kagg
 (IEEE BigData Cup 2026): instance segmentation of solar filaments in 2048 x 2048 GONG H-alpha
 frames, scored with Panoptic Quality (PQ) against every annotator of a frame.
 
+**Author:** Muhammad Elias Muhammadi, Kabul, Afghanistan
+([ORCID 0009-0006-7490-0476](https://orcid.org/0009-0006-7490-0476), Muhammad.Elias.Muhammadi@gmail.com)
+
 **Report:** [report.pdf](report.pdf)
 
 ![The pipeline on one validation frame](report/figures/pipeline.png)
